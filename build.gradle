@@ -1,5 +1,16 @@
 plugins {
     id 'java'
+    id 'java-library'
+    id 'maven-publish'
+}
+
+def localProperties = new Properties()
+def localPropertiesFile = file("local.properties")
+
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.withReader { reader ->
+        localProperties.load(reader)
+    }
 }
 
 group = 'com.lordzintick'
@@ -31,4 +42,17 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+
+publishing {
+    repositories {
+        maven {
+            name = "GithubPackages"
+            url = uri("https://maven.pkg.github.com")
+            credentials {
+                username = localProperties.getProperty('gpr.user')
+                password = localProperties.getProperty('gpr.key')
+            }
+        }
+    }
 }
