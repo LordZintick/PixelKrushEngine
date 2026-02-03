@@ -13,7 +13,7 @@ if (localPropertiesFile.exists()) {
     }
 }
 
-group = 'com.lordzintick'
+group = "com.github.lordzintick"
 version = '0.1'
 
 java {
@@ -45,10 +45,15 @@ test {
 }
 
 publishing {
+    publications {
+        maven(MavenPublication) {
+            from components.java
+        }
+    }
     repositories {
         maven {
             name = "GithubPackages"
-            url = uri("https://maven.pkg.github.com")
+            url = "https://maven.pkg.github.com/LordZintick/PixelKrushEngine"
             credentials {
                 username = localProperties.getProperty('gpr.user')
                 password = localProperties.getProperty('gpr.key')
