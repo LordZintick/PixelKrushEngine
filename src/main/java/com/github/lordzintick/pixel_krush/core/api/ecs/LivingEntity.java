@@ -10,24 +10,54 @@ import com.github.lordzintick.pixel_krush.core.api.ecs.sys.anim.AbstractAnimatio
 import com.github.lordzintick.pixel_krush.core.api.ecs.sys.EffectsSystem;
 import com.github.lordzintick.pixel_krush.core.util.Direction;
 
+/**
+ * An extension of {@link Entity} that contains some methods and components unique to moving, living entities, such as enemies or players.
+ */
 public abstract class LivingEntity extends Entity {
+    /**
+     * A {@link RangedFloatComponent} representing the current health points of this entity.
+     */
     public final RangedFloatComponent health;
+    /**
+     * A {@link TextureArrayComponent} holding the split spritesheet of this entity.
+     */
     protected final TextureArrayComponent textures;
+    /**
+     * An {@link AnimationComponent} holding animation and graphical-related metadata.
+     */
     protected final AnimationComponent animation;
+    /**
+     * A {@link BiValueComponent} holding the base speed and the speed multiplier, respectively.
+     */
     public final BiValueComponent<Float, Float> speed;
+    /**
+     * A {@link ValueComponent} holding the angle of this entity.
+     */
     protected final ValueComponent<Float> angle;
+    /**
+     * A {@link ValueComponent} representing whether this entity is currently moving.
+     */
     protected final ValueComponent<Boolean> moving;
+    /**
+     * A {@link ValueComponent} representing the direction this entity is facing.
+     */
     protected final ValueComponent<Direction> direction;
+    /**
+     * An {@link EffectsComponent} that holds all the status effects this entity is currently experiencing.
+     */
     private final EffectsComponent effectsComponent;
 
+    /**
+     * The remaining i-frames (immunity time) of this entity, in seconds.
+     */
     public float iframes = 0;
 
     /**
-     * Constructs a new {@link LivingEntity} with the provided spritesheet, which will be split into regions of the provided size
+     * Constructs a new {@link LivingEntity} with the provided spritesheet, which will be split into regions of the provided size, and initializes components/systems.
      *
-     * @param screen The {@link AbstractGameScreen} containing this entity
-     * @param width  The width of the entity's damage
-     * @param height The height of the entity's image
+     * @param screen The {@link AbstractGameScreen} containing this entity.
+     * @param width  The width of the entity's image.
+     * @param height The height of the entity's image.
      */
     public LivingEntity(AbstractGameScreen screen, Texture texture, int width, int height) {
         super(screen, width, height);
@@ -44,25 +74,54 @@ public abstract class LivingEntity extends Entity {
         systems.register(getId("animation"), getAnimationSystem());
     }
 
+    /**
+     * Called when this entity dies.
+     */
+    public void onDeath() {
+        remove();
+    }
+
+    /**
+     * Applies a specified effect to this entity.
+     * @param effect The {@link Effect} to apply to this entity.
+     */
     public void applyEffect(Effect effect) {
         effect.apply(this);
         effectsComponent.applyEffect(effect);
     }
 
+    /**
+     * Gets whether this entity is experiencing a specified status effect.
+     * @param effect The {@link Effect} to check whether this entity is experiencing.
+     * @return Whether this entity is experiencing the specified status effect.
+     */
     public boolean hasEffect(Effect effect) {
         return effectsComponent.hasEffect(effect);
     }
 
+    /**
+     * Damages the entity by the specified amount, with immunity frames.
+     * @param amount The amount to damage this entity by. If you want to heal the entity, use {@link LivingEntity#heal(float)} instead.
+     */
     public void damage(float amount) {
         damage(amount, false);
     }
 
+    /**
+     * Damages the entity by the specified amount.
+     * @param amount The amount to damage this entity by. If you want to heal the entity, use {@link LivingEntity#heal(float)} instead.
+     * @param noImmunity Whether to not trigger the i-frame damage cooldown of 0.25 seconds.
+     */
     public void damage(float amount, boolean noImmunity) {
         health.set(health.get() - amount);
         if (!noImmunity)
             iframes = 0.25f;
     }
 
+    /**
+     * Heals the entity by the specified amount.
+     * @param amount The amount to heal this entity by. If you want to damage the entity, use {@link LivingEntity#damage(float)} instead.
+     */
     public void heal(float amount) {
         health.set(Math.min(getMaxHealth(), health.get() + amount));
         screen.game.getAudioSample("heal").play();
@@ -92,8 +151,27 @@ public abstract class LivingEntity extends Entity {
         }
     }
 
+    /**
+     * Used to define the maximum health of the entity.
+     * @return The maximum health of the entity.
+     */
     public abstract int getMaxHealth();
+
+    /**
+     * Used to define the animation system to use for animation of the entity.
+     * @return The animation system to be used by the entity.
+     */
     protected abstract AbstractAnimationSystem getAnimationSystem();
+
+    /**
+     * Used to define the amount of time it takes to advance to the next frame of animation.
+     * @return The time it takes to advance to the next frame of animation.
+     */
     protected abstract float getFrameTime();
+
+    /**
+     * Used to define the amount of frames the entity has in its animation(s).
+     * @return The amount of frames the entity has in its animation(s).
+     */
     protected abstract int getFrameCount();
 }

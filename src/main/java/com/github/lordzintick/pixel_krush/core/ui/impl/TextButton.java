@@ -10,14 +10,25 @@ import com.github.lordzintick.pixel_krush.core.util.UIUtil;
 import com.github.lordzintick.pixel_krush.core.ui.api.Widget;
 
 /**
- * An extension of {@link Widget} describing a clickable button that has a text label attached.<br>
- * Also see {@link TextLabel}
+ * An extension of {@link Widget} representing a clickable button that has a text label attached.<br>
+ * Also see {@link TextLabel}.
  */
 public class TextButton extends Widget {
+    /**
+     * The {@link Text} to show on the button.
+     */
     public Text label;
+    /**
+     * A {@link Runnable} to run when the button is clicked.
+     */
     public final Runnable onClick;
-    private NinePatch texture, textureHover;
-    private Texture debugTexture;
+    /**
+     * The background texture to display normally.
+     */
+    private NinePatch texture, /**
+     * The background texture to display when the user is hovering over the button.
+     */
+ textureHover;
 
     /**
      * Initialize the textures needed for rendering
@@ -25,17 +36,17 @@ public class TextButton extends Widget {
     private void initTextures() {
         texture = new NinePatch((Texture) screen.game.getAssetOrThrow("textures/ui/button.png"), 2, 2, 2, 2);
         textureHover = new NinePatch((Texture) screen.game.getAssetOrThrow("textures/ui/button_pressed.png"), 2, 2, 2, 2);
-        debugTexture = screen.game.getAssetOrThrow("textures/debug.png");
     }
 
     /**
-     * @param screen The {@link BaseScreen} this {@link TextButton} is for
-     * @param label The {@link Text} to display on this button
-     * @param x The initial X position of the button
-     * @param y The initial Y position of the button
-     * @param width The initial width of the button
-     * @param height The initial height of the button
-     * @param onClick The {@link Runnable} to trigger when the button is left-clicked
+     * Constructs a new {@link TextButton} with the provided parameters.
+     * @param screen The {@link BaseScreen} this {@link TextButton} is for.
+     * @param label The {@link Text} to display on this button.
+     * @param x The initial X position of the button.
+     * @param y The initial Y position of the button.
+     * @param width The initial width of the button.
+     * @param height The initial height of the button.
+     * @param onClick The {@link Runnable} to trigger when the button is left-clicked.
      */
     public TextButton(BaseScreen screen, Text label, int x, int y, int width, int height, Runnable onClick) {
         super(screen, width, height);
@@ -58,8 +69,6 @@ public class TextButton extends Widget {
     public void render(Batch batch, float deltaTime) {
         super.render(batch, deltaTime);
         if (!visible) return;
-        // Draw the debug texture
-        batch.draw(debugTexture, x, y, width, height);
 
         // Draw the corresponding texture depending on whether the user is hovering over the button or not
         if (hovering) {

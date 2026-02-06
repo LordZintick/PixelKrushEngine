@@ -12,16 +12,15 @@ import java.util.UUID;
  * A utility class containing various UI-related utility methods
  */
 public final class UIUtil {
-
     /**
-     * Renders a formatted {@link Text} object with all of its special preconfigured formatting included
-     * @param game The {@link AbstractGame} to render the text to
-     * @param batch The {@link Batch} to render the text with
-     * @param text The formatted {@link Text} object to render with its formatting
-     * @param x The X position to render the text at
-     * @param y The Y position to render the text at
-     * @param width The target width to render the text with
-     * @param wrap Whether to wrap the text if it exceeds the target width or let it continue going
+     * Renders a formatted {@link Text} object with all of its preconfigured formatting.
+     * @param game The {@link AbstractGame} to render the text to.
+     * @param batch The {@link Batch} to render the text with.
+     * @param text The formatted {@link Text} object to render with its formatting.
+     * @param x The X position to render the text at.
+     * @param y The Y position to render the text at.
+     * @param width The target width to render the text with.
+     * @param wrap Whether to wrap the text if it exceeds the target width or let it continue drawing past the defined width.
      */
     public static void renderText(AbstractGame game, Batch batch, Text text, float x, float y, int width, boolean wrap) {
         BitmapFont font = game.getFont(text.font);
@@ -35,15 +34,21 @@ public final class UIUtil {
     }
 
     /**
-     * Used in the "glitchy" mode text; Generates a random string of A-Z, 0-9 characters of the provided length
-     * @param length The length of the random string to generate
-     * @return A random string of characters of the provided length
+     * Used in the "glitchy" mode text; Generates a random string of A-Z, 0-9 characters of the provided length.
+     * @param length The length of the random string to generate.
+     * @return A random string of characters of the provided length.
      */
     public static String generateRandomString(int length) {
         String uuid = UUID.randomUUID().toString().replace("-", "");
         return uuid.substring(0, Math.min(length, uuid.length()));
     }
 
+    /**
+     * Gets the width of a certain string when it would be drawn in the specified font.
+     * @param string The string to get the width of.
+     * @param font The font to test with.
+     * @return The length of the provided string when drawn in the provided font.
+     */
     public static float getFontStringWidth(String string, BitmapFont font) {
         GlyphLayout layout = new GlyphLayout();
         layout.setText(font, string);

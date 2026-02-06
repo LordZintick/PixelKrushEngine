@@ -5,13 +5,22 @@ import com.github.lordzintick.pixel_krush.core.api.ecs.Entity;
 import com.github.lordzintick.pixel_krush.core.api.ecs.comp.ValueComponent;
 import com.github.lordzintick.pixel_krush.core.util.Direction;
 
+/**
+ * An animation system that animates a character that can face in 4 directions.
+ */
 public class DirectionalAnimationSystem extends AbstractAnimationSystem {
+    /**
+     * A {@link ValueComponent} used to track the current direction of the entity.
+     */
     private final ValueComponent<Direction> direction;
 
+    /**
+     * Constructs a new {@link DirectionalAnimationSystem} and initializes dependencies.
+     * @param parent The parent {@link Entity} of the system.
+     */
     public DirectionalAnimationSystem(Entity parent) {
         super(parent);
         direction = loadDependency(parent.getId("direction"));
-
     }
 
     @Override

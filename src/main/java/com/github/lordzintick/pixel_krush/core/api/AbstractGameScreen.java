@@ -18,6 +18,15 @@ public abstract class AbstractGameScreen extends BaseScreen {
         super(game);
     }
 
+    /**
+     * @param frames A list of {@link TextureRegion}s representing the frames of animation visually for this particle.
+     * @param x The x position of the particle
+     * @param y The y position of the particle
+     * @param velocity The velocity of the particle, in the form <code>x, y, scale, angle</code>
+     * @param scale The scale of the particle from its textures' original size.
+     * @param frameTime The time between frames of animation for the particle, in seconds.
+     * @param lifeTime The amount of time, in seconds, that the particle should exist for.
+     */
     public void addParticle(TextureRegion[] frames, float x, float y, Vector4 velocity, float scale, float frameTime, float lifeTime) {
         if (Math.abs(x) >= Gdx.graphics.getWidth() * 2 || Math.abs(y) >= Gdx.graphics.getWidth() * 2 || x == 0 || y == 0) return;
 

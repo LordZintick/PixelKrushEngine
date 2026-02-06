@@ -3,7 +3,14 @@ package com.github.lordzintick.pixel_krush.core.api.ecs.sys.anim;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.github.lordzintick.pixel_krush.core.api.ecs.Entity;
 
+/**
+ * An animation system used to animate simple objects with one constantly-playing animation.
+ */
 public class SimpleAnimationSystem extends AbstractAnimationSystem {
+    /**
+     * Constructs a new {@link SimpleAnimationSystem} and initializes dependencies.
+     * @param parent The parent {@link Entity} of the system.
+     */
     public SimpleAnimationSystem(Entity parent) {
         super(parent);
     }

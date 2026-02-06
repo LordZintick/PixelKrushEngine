@@ -6,7 +6,13 @@ import com.github.lordzintick.pixel_krush.core.util.IRenderable;
  * An abstraction of the {@link IRenderable} interface that provides a position
  */
 public abstract class PositionedRenderable implements IRenderable {
-    public float x, y = 0;
+    /**
+     * The x position.
+     */
+    public float x, /**
+     * The y position.
+     */
+ y = 0;
 
     /**
      * Constructs a new {@link PositionedRenderable} with {@code x} and {@code y} set to 0

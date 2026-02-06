@@ -6,19 +6,22 @@ import com.github.lordzintick.pixel_krush.core.api.BaseScreen;
 import com.github.lordzintick.pixel_krush.core.ui.api.Widget;
 
 /**
- * An extension of {@link Widget} describing a simple image displayer
+ * An extension of {@link Widget} representing a simple image displayer.
  */
 public class ImageLabel extends Widget {
+    /**
+     * The {@link Texture} to display on the screen at the label's location.
+     */
     public Texture img;
 
     /**
-     * Constructs a new {@link ImageLabel} displaying the provided image at the provided coordinates with the provided {@code width} and {@code height}
-     * @param screen The {@link BaseScreen} this {@link ImageLabel} is for
-     * @param img The image for this {@link ImageLabel} to display
-     * @param x The initial X position of the image label
-     * @param y The initial Y position of the image label
-     * @param width The width to display the image at
-     * @param height The height to display the image at
+     * Constructs a new {@link ImageLabel} displaying the provided image at the provided coordinates with the provided {@code width} and {@code height}.
+     * @param screen The {@link BaseScreen} this {@link ImageLabel} is for.
+     * @param img The image for this {@link ImageLabel} to display.
+     * @param x The initial X position of the image label.
+     * @param y The initial Y position of the image label.
+     * @param width The width to display the image at.
+     * @param height The height to display the image at.
      */
     public ImageLabel(BaseScreen screen, Texture img, int x, int y, int width, int height) {
         super(screen);

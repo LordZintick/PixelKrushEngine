@@ -10,10 +10,25 @@ import com.github.lordzintick.pixel_krush.core.api.BaseScreen;
 import com.github.lordzintick.pixel_krush.core.util.Text;
 import com.github.lordzintick.pixel_krush.core.util.UIUtil;
 
+/**
+ * An extension of {@link Widget} used for small notifications that show up in the top-right corner of the screen.
+ */
 public abstract class Toast extends Widget {
+    /**
+     * A {@link TextureRegion} representing the icon of the widget to show to the right of the text.
+     */
     public final TextureRegion icon;
+    /**
+     * {@link Text} representing the text to show next to the icon on the display.
+     */
     public final Text displayName;
 
+    /**
+     * Constructs a new {@link Toast} with the provided icon and display name.
+     * @param screen The {@link BaseScreen} this {@link Toast} should be displayed on.
+     * @param icon The {@link TextureRegion} representing the icon of this {@link Toast} to show to the right of the text on the display.
+     * @param displayName The text to show next to the icon on the display.
+     */
     protected Toast(BaseScreen screen, TextureRegion icon, Text displayName) {
         super(screen);
         this.icon = icon;

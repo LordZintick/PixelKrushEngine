@@ -12,13 +12,27 @@ import com.github.lordzintick.pixel_krush.core.ui.api.Widget;
 
 import java.util.function.Function;
 
+/**
+ * An input handler class to handle input from a gamepad.
+ */
 public final class GamepadInput implements ControllerListener {
+    /**
+     * The {@link AbstractGame Game} this input handler is for.
+     */
     private final AbstractGame game;
 
+    /**
+     * Constructs a new {@link GamepadInput} for the specified game.
+     * @param game The {@link AbstractGame Game} this input handler is for.
+     */
     public GamepadInput(AbstractGame game) {
         this.game = game;
     }
 
+    /**
+     * Gets all the registered {@link Keybind}s in the parent game.
+     * @return An {@link ObjectMap.Values} containing all the registered keybinds in the parent game.
+     */
     private ObjectMap.Values<Keybind> getKeybinds() {
         return ((ImmutableRegistry) game.queryRegistryOrThrow(Identifier.of("global", "keybinds"))).valueCollection();
     }
@@ -72,6 +86,12 @@ public final class GamepadInput implements ControllerListener {
         return false;
     }
 
+    /**
+     * Attempts to get the button index of a certain button from a {@link ControllerMapping}, or returns <code>ControllerMapping.UNDEFINED</code> if the {@link ControllerMapping} is null.
+     * @param mapping The {@link ControllerMapping} to attempt to get the button from.
+     * @param func The function to run to get the button index if the provided <code>mapping</code> is not null.
+     * @return The result of the <code>func</code> function when providing the provided <code>mapping</code>, or <code>ControllerMapping.UNDEFINED</code> if <code>mapping</code> is null.
+     */
     public static int tryGetButton(ControllerMapping mapping, Function<ControllerMapping, Integer> func) {
         if (mapping == null) return ControllerMapping.UNDEFINED;
         return func.apply(mapping);

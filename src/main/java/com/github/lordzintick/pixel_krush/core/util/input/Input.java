@@ -14,14 +14,31 @@ import java.util.function.BiConsumer;
  * A wrapper class around {@link InputProcessor} for game-specific input handling
  */
 public final class Input implements InputProcessor {
+    /**
+     * The {@link AbstractGame Game} this input handler is for.
+     */
     private final AbstractGame game;
+    /**
+     * A <code>boolean</code> array representing the mouse buttons that the user is currently pressing.
+     */
     public boolean[] mouseButtonsPressed = new boolean[] {false, false, false, false, false};
+    /**
+     * A list of {@link BiConsumer}s to listen for when the user scrolls, passing in the x and y scroll deltas.
+     */
     public final ArrayList<BiConsumer<Float, Float>> scrollListeners = new ArrayList<>();
 
+    /**
+     * Constructs a new {@link Input} with the provided {@link AbstractGame}.
+     * @param game The {@link AbstractGame Game} this {@link Input} is for.
+     */
     public Input(AbstractGame game) {
         this.game = game;
     }
 
+    /**
+     * Gets all the registered {@link Keybind}s in the parent game.
+     * @return An {@link ObjectMap.Values} containing all the registered keybinds in the parent game.
+     */
     private ObjectMap.Values<Keybind> getKeybinds() {
         return ((ImmutableRegistry) game.queryRegistryOrThrow(AbstractGame.getGlobalId("keybinds"))).valueCollection();
     }

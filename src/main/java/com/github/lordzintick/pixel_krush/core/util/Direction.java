@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 
 /**
  * A utility class defining a direction.
- * Diagonals are included
+ * Diagonals are included.
  */
 public enum Direction {
     UP(new Vector2(0,1)),
@@ -22,9 +22,9 @@ public enum Direction {
     }
 
     /**
-     * Flips the direction over the provided axis
-     * @param horizontalAxis Whether this flip should occur over the horizontal axis (vertical flip) or the vertical axis (horizontal flip)
-     * @return The newly flipped {@link Direction}
+     * Flips the direction over the provided axis.
+     * @param horizontalAxis Whether this flip should occur over the horizontal axis (vertical flip) or the vertical axis (horizontal flip).
+     * @return The newly flipped {@link Direction}.
      */
     public Direction flip(boolean horizontalAxis) {
         if (horizontalAxis) {

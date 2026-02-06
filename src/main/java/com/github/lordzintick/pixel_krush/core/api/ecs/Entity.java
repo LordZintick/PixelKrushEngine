@@ -16,34 +16,41 @@ import com.github.lordzintick.pixel_krush.core.util.registry.Registry;
 import java.awt.*;
 
 /**
- * A base abstract class from which all moving and living entities should extend from
+ * A base abstract class from which all "entities," that is to say, "utilizes the entity component system" should extend.<br>
+ * Holds {@link Registry Registries} of {@link Entity#components} and {@link Entity#systems} for use by the ECS.
  */
 public abstract class Entity extends AbstractGameObject {
+    /**
+     * A {@link ValueComponent} representing the color tint of this entity.
+     */
     public final ValueComponent<Color> colorModifier;
-    protected final Logger LOGGER = new Logger(this.getClass());
 
+    /**
+     * A {@link Registry} used to hold all of this entity's {@link AbstractComponent components}.
+     */
     protected final Registry<AbstractComponent> components = new Registry<>();
+    /**
+     * A {@link Registry} used to hold all of this entity's {@link AbstractSystem systems}.
+     */
     protected final Registry<AbstractSystem> systems = new Registry<>();
 
+    /**
+     * The amount of time this entity has existed for, in seconds.
+     */
     protected double ticks = 0;
 
     /**
-     * Constructs a new {@link Entity} with the provided spritesheet, which will be split into regions of the provided size
-     * @param screen The {@link AbstractGameScreen} containing this entity
-     * @param width The width of the entity's damage
-     * @param height The height of the entity's image
+     * Constructs a new {@link Entity} with the provided spritesheet, which will be split into regions of the provided size, and initializes components/systems.
+     * @param screen The {@link AbstractGameScreen} containing this entity.
+     * @param width The width of the entity's image.
+     * @param height The height of the entity's image.
      */
     public Entity(AbstractGameScreen screen, int width, int height) {
         super(screen);
         colorModifier = components.register(getId("color_modifier"), new ValueComponent<>(this, Color.WHITE));
-        systems.register(getId("color_modifier"), new ColorModifierSystem(this));
 
         this.width = width;
         this.height = height;
-    }
-
-    public void onDeath() {
-        remove();
     }
 
     @Override
@@ -64,7 +71,21 @@ public abstract class Entity extends AbstractGameObject {
         systems.forEachEntry((id, system) -> system.remove());
     }
 
+    /**
+     * A helper shorthand method that gets an ID with this entity's game's namespace.
+     * @param path The path/name of the new identifier.
+     * @return A new ID using the namespace of this entity's game.
+     */
     public final Identifier getId(String path) {return screen.game.getId(path);}
+
+    /**
+     * Queries an {@link ImmutableRegistry} containing all of this entity's components.
+     * @return An {@link ImmutableRegistry} of this entity's components.
+     */
     public final ImmutableRegistry<AbstractComponent> queryComponents() {return ImmutableRegistry.of(components);}
+    /**
+     * Queries an {@link ImmutableRegistry} containing all of this entity's systems.
+     * @return An {@link ImmutableRegistry} of this entity's systems.
+     */
     public final ImmutableRegistry<AbstractSystem> querySystems() {return ImmutableRegistry.of(systems);}
 }
